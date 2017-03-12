@@ -64,6 +64,8 @@ function [W,sigma,M,mean,x_t] = EM_Missing(X,q,itr)
             if ~isnan(X(k,i))
                 
                 x_t(k,i) = (X(k,i)-mean(k,1));
+            else
+                x_t(k,i) = (X(k-1,i)-mean(k,1));     % Tweak
             end
         end
     end
