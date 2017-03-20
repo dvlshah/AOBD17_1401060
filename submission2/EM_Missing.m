@@ -1,4 +1,4 @@
-% EM Algorithm
+% EM Algorithm for Missing Values
 % Reference:- Probabilistic Principal Component Analysis by 
 %             Michael E. Tipping; Christopher M. Bisho
 
@@ -45,17 +45,21 @@ function [W,sigma,M,mean,x_t] = EM_Missing(X,q,itr)
     end
     
     S = S/x_col;
-    M = W'*W + sigma*eye(q);
     
     for i = 1:itr
+        
+        M = W'*W + sigma*eye(q);
+        
+        inv_M = inv(M);
+        
+        mult = S*W;
+        
        
-        W_cap = S*W*inv(sigma*eye(q) + M\(W'*S*W));
-        sigma_cap = trace(S - S*W*inv(M)*W_cap')/x_row;
+        W_cap = mult*inv(sigma*eye(q) + inv_M*(W'*mult));
+        sigma_cap = trace(S - mult*inv_M*W_cap')/x_row;
         
         W = W_cap;
         sigma = sigma_cap;
-        
-        M = W'*W + sigma*eye(q);
         
     end
     
@@ -64,9 +68,7 @@ function [W,sigma,M,mean,x_t] = EM_Missing(X,q,itr)
             if ~isnan(X(k,i))
                 
                 x_t(k,i) = (X(k,i)-mean(k,1));
-            else
-                x_t(k,i) = (X(k-1,i)-mean(k,1));     % Tweak
-            end
+			end
         end
     end
     

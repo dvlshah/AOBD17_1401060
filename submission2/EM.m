@@ -32,18 +32,19 @@ function [W,sigma,M,mean,x_t] = EM(X,q,itr)
     end
     
     S = S/x_col;
-    M = W'*W + sigma*eye(q);
     
     for i = 1:itr
-       
-        W_cap = S*W*inv(sigma*eye(q) + M\(W'*S*W));
-        sigma_cap = trace(S - S*W*inv(M)*W_cap')/x_row;
-        
-        W = W_cap;
-        sigma = sigma_cap;
         
         M = W'*W + sigma*eye(q);
         
+        mult = S*W;
+        inv_M = inv(M);
+        
+        W_cap = mult*inv(sigma*eye(q) + inv_M*(W'*mult));
+        sigma_cap = trace(S - mult*inv_M*W_cap')/x_row;
+        
+        W = W_cap;
+        sigma = sigma_cap;
     end
     
     for i = 1:x_col

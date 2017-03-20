@@ -1,0 +1,30 @@
+Input  :- Image : London_256.jpg
+Output :- (RMS Error, Time in Seconds)
+
+Tuning Parameters : ws, patch_factor
+
+Missing	Values :-	
+
+			PPCA-EM						RPCA
+		(patch_factor = 1)	  	(patch_factor = 1)
+
+W=8		(0.009647, 11.398107)	 (0.009817, 3.640755)	Missing Density = 1 Pixel Every 40 Pixels
+W=8		(0.022256, 10.031302)	 (0.084480, 3.669722)	Missing Density = 1 Pixel Every 16 Pixels
+W=32	(0.019637, 0.264526)	 (0.020676, 8.014641)	Missing Density = 1 Pixel Every 30 Pixels
+W=32	(0.031676, 0.285043)	 (0.090203, 8.037157)	Missing Density = 1 Pixel Every 16 Pixels
+
+Noisy Image :- 
+
+	      PPCA-EM			RPCA
+	(patch_factor = 0.5)	  (patch_factor = 1)
+
+W=8		(0.067532, 2.326407)	 (0.055173, 3.545678)	Noise : Salt & Pepper, Density = 0.02 			; Originl Corruption Error : 0.044005 
+% RPCA recovers 'visually' good quality image than the EM-PPCA
+W=8		(0.069511, 2.324380)	 (0.062030, 3.697297)	Noise : Speckle, Variance = 0.03 				; Originl Corruption Error : 0.056765 
+W=8		(0.073693, 2.411997)	 (0.070843, 3.706196)	Noise : Gaussian, Mean = 0, Variance = 0.03 	; Originl Corruption Error : 0.083445 
+W=32	(0.126754, 0.095203)	 (0.110551, 8.009551)	Noise : Salt & Pepper, Density = 0.02 			; Originl Corruption Error : 0.044005 		
+% EM-PPCA recovers 'visually' far better quality image than the RPCA
+W=32	(0.129571, 0.090463)	 (0.116392, 7.864948)	Noise : Speckle, Variance = 0.03 				; Originl Corruption Error : 0.056765 		
+% EM-PPCA recovers 'visually' far better quality image than the RPCA
+W=32	(0.136765, 0.122567)	 (0.116132, 8.074309)	Noise : Gaussian, Mean = 0, Variance = 0.03 	; Originl Corruption Error : 0.083445 		
+% EM-PPCA recovers 'visually' far better quality image than the RPCA
